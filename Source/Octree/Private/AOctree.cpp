@@ -15,8 +15,6 @@ AAOctree::AAOctree()
 
 	BoundingBox->SetBoxExtent(FVector(100.f, 100.f, 100.f));
 	BoundingBox->SetRelativeLocation(FVector::ZeroVector);
-
-
 }
 
 // Called when the game starts or when spawned
@@ -30,8 +28,15 @@ void AAOctree::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 
-	BoundingBox->SetRelativeLocation(((FirstCorner + Transform.GetLocation()) + (SecondCorner + Transform.GetLocation())) * 0.5f);
-	BoundingBox->SetBoxExtent(((SecondCorner + Transform.GetLocation()) - (FirstCorner + Transform.GetLocation())).GetAbs() * 0.5f);
+	FVector WorldLocation = Transform.GetLocation();
+
+	FVector CentreLocation = ((FirstCorner + WorldLocation) + (SecondCorner + WorldLocation)) * 0.5f;
+	FVector BoxExtents = ((SecondCorner + WorldLocation) - (FirstCorner + WorldLocation)).GetAbs() * 0.5f;
+	
+	BoundingBox->SetRelativeLocation(CentreLocation);
+	BoundingBox->SetBoxExtent(BoxExtents);
+
+	BoundingBox->SetVisibility(bBoundingBoxVisibiliy);
 }
 
 // Called every frame

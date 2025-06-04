@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/BoxComponent.h"
+#include "Components/StaticMeshComponent.h"
 
 #include "AOctree.generated.h"
 
@@ -22,6 +23,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (MakeEditWidget = true))
 	FVector SecondCorner = FVector(-50.f, -50.f, 50.f);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bBoundingBoxVisibiliy = true;
 
 	UPROPERTY(VisibleAnywhere)
 	UBoxComponent* BoundingBox;
