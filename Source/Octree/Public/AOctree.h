@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/BoxComponent.h"
+
 #include "AOctree.generated.h"
 
 UCLASS()
@@ -16,15 +18,21 @@ public:
 	AAOctree();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (MakeEditWidget = true))
-	FVector FirstCorner = FVector(1.f, 1.f, 1.f);
+	FVector FirstCorner = FVector(50.f, 50.f, 50.f);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (MakeEditWidget = true))
-	FVector SecondCorner = FVector(-1.f, -1.f, -1.f);
+	FVector SecondCorner = FVector(-50.f, -50.f, 50.f);
 
+	UPROPERTY(VisibleAnywhere)
+	UBoxComponent* BoundingBox;
+
+	//USceneComponent* MyRootComponent;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	virtual void OnConstruction(const FTransform& Transform) override;
 
 public:	
 	// Called every frame

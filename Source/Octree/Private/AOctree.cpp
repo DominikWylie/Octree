@@ -9,6 +9,14 @@ AAOctree::AAOctree()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+
+	BoundingBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoundingBox"));
+
+	BoundingBox->SetBoxExtent(FVector(100.f, 100.f, 100.f));
+	BoundingBox->SetRelativeLocation(FVector::ZeroVector);
+
+
 }
 
 // Called when the game starts or when spawned
@@ -16,6 +24,14 @@ void AAOctree::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void AAOctree::OnConstruction(const FTransform& Transform)
+{
+	Super::OnConstruction(Transform);
+
+	BoundingBox->SetRelativeLocation(((FirstCorner + Transform.GetLocation()) + (SecondCorner + Transform.GetLocation())) * 0.5f);
+	BoundingBox->SetBoxExtent(((SecondCorner + Transform.GetLocation()) - (FirstCorner + Transform.GetLocation())).GetAbs() * 0.5f);
 }
 
 // Called every frame
