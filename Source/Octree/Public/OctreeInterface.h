@@ -3,20 +3,25 @@
 #pragma once
 
 #include "CoreMinimal.h"
+//#include "UObject/ObjectMacros.h"
+//#include "UObject/ScriptMacros.h"
+//#include "UObject/Interface.h"
+
+#include "OctreeInterface.generated.h"
 
 /**
  * 
  */
-UCLASS()
-class OCTREE_API UOctreeInterface : public UInterface
+UINTERFACE(MinimalAPI)
+class UOctreeInterface : public UInterface
 {
 	GENERATED_BODY()
 };
 
-class OCTREE_API IOctreeInterface 
+class IOctreeInterface 
 {
 	GENERATED_BODY()
 
 public:
-	virtual FVector GetPosition() = 0;
+	//virtual FVector GetPosition() = 0;
 };
