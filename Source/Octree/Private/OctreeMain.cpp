@@ -11,10 +11,14 @@ AOctreeMain::AOctreeMain()
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 
+#if WITH_EDITOR
 	BoundingBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoundingBox"));
 
 	BoundingBox->SetBoxExtent(FVector(100.f, 100.f, 100.f));
 	BoundingBox->SetRelativeLocation(FVector::ZeroVector);
+
+	BoundingBox->ShapeColor = FColor::Green;
+#endif
 }
 
 // Called when the game starts or when spawned
@@ -28,6 +32,7 @@ void AOctreeMain::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 
+#if WITH_EDITOR
 	FVector WorldLocation = Transform.GetLocation();
 
 	FVector CentreLocation = ((FirstCorner + WorldLocation) + (SecondCorner + WorldLocation)) * 0.5f;
@@ -37,6 +42,7 @@ void AOctreeMain::OnConstruction(const FTransform& Transform)
 	BoundingBox->SetBoxExtent(BoxExtents);
 
 	BoundingBox->SetVisibility(bBoundingBoxVisibiliy);
+#endif
 }
 
 // Called every frame

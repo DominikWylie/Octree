@@ -26,8 +26,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bBoundingBoxVisibiliy = true;
 
+#if WITH_EDITORONLY_DATA
+	//editor macro only
 	UPROPERTY(VisibleAnywhere)
 	UBoxComponent* BoundingBox;
+#endif
 
 	//USceneComponent* MyRootComponent;
 
