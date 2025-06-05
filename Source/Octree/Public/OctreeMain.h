@@ -5,18 +5,17 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/BoxComponent.h"
-#include "Components/StaticMeshComponent.h"
 
-#include "AOctree.generated.h"
+#include "OctreeMain.generated.h"
 
 UCLASS()
-class OCTREE_API AAOctree : public AActor
+class OCTREE_API AOctreeMain : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AAOctree();
+	AOctreeMain();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Meta = (MakeEditWidget = true))
 	FVector FirstCorner = FVector(50.f, 50.f, 50.f);
@@ -38,7 +37,7 @@ protected:
 
 	virtual void OnConstruction(const FTransform& Transform) override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
