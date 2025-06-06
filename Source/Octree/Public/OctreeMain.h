@@ -26,22 +26,22 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bBoundingBoxVisibiliy = true;
 
-#if WITH_EDITORONLY_DATA
-	//editor macro only
-	UPROPERTY(VisibleAnywhere)
-	UBoxComponent* BoundingBox;
-#endif
+private:
 
-	//USceneComponent* MyRootComponent;
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	//virtual void BeginPlay() override;
 
 	virtual void OnConstruction(const FTransform& Transform) override;
 
-public:
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+#if WITH_EDITOR
+	//virtual void Tick(float DeltaTime) override;
+	virtual bool ShouldTickIfViewportsOnly() const override { return true; }
+#endif
+
+	void DrawBox();
+
+	//todo
+	//create lightweight debug box system for seeing the octree in editor and in game (that can be turned off and on)
+	//create custom AABB collision for axis alighned efficiancy
 };

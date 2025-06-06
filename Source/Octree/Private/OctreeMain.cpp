@@ -11,44 +11,41 @@ AOctreeMain::AOctreeMain()
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 
+	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bStartWithTickEnabled = true;
+
 #if WITH_EDITOR
-	BoundingBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoundingBox"));
-
-	BoundingBox->SetBoxExtent(FVector(100.f, 100.f, 100.f));
-	BoundingBox->SetRelativeLocation(FVector::ZeroVector);
-
-	BoundingBox->ShapeColor = FColor::Green;
+	bRunConstructionScriptOnDrag = true; //for visual updates while moving in editor
 #endif
-}
-
-// Called when the game starts or when spawned
-void AOctreeMain::BeginPlay()
-{
-	Super::BeginPlay();
-	
 }
 
 void AOctreeMain::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
-
-#if WITH_EDITOR
-	FVector WorldLocation = Transform.GetLocation();
-
-	FVector CentreLocation = ((FirstCorner + WorldLocation) + (SecondCorner + WorldLocation)) * 0.5f;
-	FVector BoxExtents = ((SecondCorner + WorldLocation) - (FirstCorner + WorldLocation)).GetAbs() * 0.5f;
-
-	BoundingBox->SetRelativeLocation(CentreLocation);
-	BoundingBox->SetBoxExtent(BoxExtents);
-
-	BoundingBox->SetVisibility(bBoundingBoxVisibiliy);
-#endif
 }
 
-// Called every frame
+void AOctreeMain::DrawBox()
+{
+	if (!bBoundingBoxVisibiliy) {
+		return;
+	}
+
+	FVector WorldLoc = GetActorLocation();
+
+	DrawDebugBox(GetWorld(), ((SecondCorner + WorldLoc) + (FirstCorner + WorldLoc)) / 2, (FirstCorner - SecondCorner) / 2, FColor::Red);
+
+	//DrawDebugBox(GetWorld(), ((SecondCorner) + (FirstCorner)) / 2, (FirstCorner - SecondCorner) / 2, FColor::Red);
+
+}
+
 void AOctreeMain::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
+	if (IsRunningGame()) {
+		Super::Tick(DeltaTime);
+	}
 
+#if WITH_EDITOR
+		DrawBox();
+#endif
 }
 

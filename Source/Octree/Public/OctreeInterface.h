@@ -3,10 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-//#include "UObject/ObjectMacros.h"
-//#include "UObject/ScriptMacros.h"
-//#include "UObject/Interface.h"
-
 #include "OctreeInterface.generated.h"
 
 /**
@@ -23,5 +19,5 @@ class IOctreeInterface
 	GENERATED_BODY()
 
 public:
-	virtual FVector GetPosition() = 0;
+	virtual FVector GetPosition() const = 0;
 };
