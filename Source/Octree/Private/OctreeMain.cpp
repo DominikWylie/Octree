@@ -33,9 +33,6 @@ void AOctreeMain::DrawBox()
 	FVector WorldLoc = GetActorLocation();
 
 	DrawDebugBox(GetWorld(), ((SecondCorner + WorldLoc) + (FirstCorner + WorldLoc)) / 2, (FirstCorner - SecondCorner) / 2, FColor::Red);
-
-	//DrawDebugBox(GetWorld(), ((SecondCorner) + (FirstCorner)) / 2, (FirstCorner - SecondCorner) / 2, FColor::Red);
-
 }
 
 void AOctreeMain::Tick(float DeltaTime)

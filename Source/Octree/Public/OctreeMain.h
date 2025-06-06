@@ -42,6 +42,5 @@ private:
 	void DrawBox();
 
 	//todo
-	//create lightweight debug box system for seeing the octree in editor and in game (that can be turned off and on)
 	//create custom AABB collision for axis alighned efficiancy
 };
