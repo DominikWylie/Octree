@@ -23,5 +23,5 @@ class IOctreeInterface
 	GENERATED_BODY()
 
 public:
-	//virtual FVector GetPosition() = 0;
+	virtual FVector GetPosition() = 0;
 };
