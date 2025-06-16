@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/BoxComponent.h"
+#include "OctreeInterface.h"
 
 #include "OctreeMain.generated.h"
 
@@ -26,6 +27,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bBoundingBoxVisibiliy = true;
 
+	void AddNode(IOctreeInterface* Node);
+
 private:
 
 	//virtual void BeginPlay() override;
@@ -33,6 +36,8 @@ private:
 	virtual void OnConstruction(const FTransform& Transform) override;
 
 	virtual void Tick(float DeltaTime) override;
+
+	TArray<IOctreeInterface*> NodeList;
 
 #if WITH_EDITOR
 	//virtual void Tick(float DeltaTime) override;

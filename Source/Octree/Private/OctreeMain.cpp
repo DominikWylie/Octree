@@ -19,6 +19,16 @@ AOctreeMain::AOctreeMain()
 #endif
 }
 
+void AOctreeMain::AddNode(IOctreeInterface* Node)
+{
+	//NodeList.Add(Node.GetInterface());
+	NodeList.Add(Node);
+
+
+	if (GEngine)
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("node Added"));
+}
+
 void AOctreeMain::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
