@@ -5,9 +5,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/BoxComponent.h"
-#include "OctreeInterface.h"
+#include "Octant.h"
 
 #include "OctreeMain.generated.h"
+
+class IOctreeInterface;
 
 UCLASS()
 class OCTREE_API AOctreeMain : public AActor
@@ -37,14 +39,20 @@ private:
 
 	virtual void Tick(float DeltaTime) override;
 
+	void DrawBox();
+
+	void SubdivideTree();
+
 	TArray<IOctreeInterface*> NodeList;
+
+	TUniquePtr<Octant> Octants[2];
+
+	bool subdevided = false;
 
 #if WITH_EDITOR
 	//virtual void Tick(float DeltaTime) override;
 	virtual bool ShouldTickIfViewportsOnly() const override { return true; }
 #endif
-
-	void DrawBox();
 
 	//todo
 	//create custom AABB collision for axis alighned efficiancy

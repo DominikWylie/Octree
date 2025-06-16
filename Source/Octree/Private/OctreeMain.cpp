@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "OctreeInterface.h"
 
 #include "OctreeMain.h"
 
@@ -27,6 +28,11 @@ void AOctreeMain::AddNode(IOctreeInterface* Node)
 
 	if (GEngine)
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("node Added"));
+
+	if (!subdevided) {
+		SubdivideTree();
+		subdevided = true;
+	}
 }
 
 void AOctreeMain::OnConstruction(const FTransform& Transform)
@@ -45,6 +51,17 @@ void AOctreeMain::DrawBox()
 	DrawDebugBox(GetWorld(), ((SecondCorner + WorldLoc) + (FirstCorner + WorldLoc)) / 2, (FirstCorner - SecondCorner) / 2, FColor::Red);
 }
 
+void AOctreeMain::SubdivideTree()
+{
+	FVector WorldLoc = GetActorLocation();
+
+	Octants[0] = MakeUnique<Octant>(FirstCorner, SecondCorner - (FirstCorner / 2));
+	Octants[1] = MakeUnique<Octant>(FirstCorner - (SecondCorner / 2), SecondCorner);
+
+	if (GEngine)
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("subdivide"));
+}
+
 void AOctreeMain::Tick(float DeltaTime)
 {
 	if (IsRunningGame()) {
@@ -53,6 +70,17 @@ void AOctreeMain::Tick(float DeltaTime)
 
 #if WITH_EDITOR
 		DrawBox();
+
+		if (subdevided) {
+
+			//shouldnt have these in tick future problem
+			UWorld* world = GetWorld();
+			FVector WorldLoc = GetActorLocation();
+
+			for (TUniquePtr<Octant>& octant : Octants) {
+				octant->Tick(world, WorldLoc);
+			}
+		}
 #endif
 }
 
